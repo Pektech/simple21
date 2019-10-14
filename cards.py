@@ -24,7 +24,7 @@ class Deck:
         for suit in suits:
             for rank in ranks:
                 self.deck.append(Card(suit,rank))
-# need to randomise cards
+
     def __str__(self):
         deck_comp = ''
         for card in self.deck:
@@ -50,7 +50,8 @@ class Hand:
     def add_cards(self, card):
         self.cards.append(card)
         self.value += values[card.rank]
-
+        if card.rank == 'Ace':
+            self.aces += 1
 
     def __str__(self):
         hand_held = ''

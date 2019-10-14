@@ -2,12 +2,12 @@ from cards import Chips, Card, Deck, Hand
 
 player_chips = Chips()
 
-def take_bet():
+def take_bet(chips):
     waiting = True
     while waiting:
         try:
-            bet = int(input("How much do you want to bet?"))
-            if bet <= player_chips.total:
+            chips.bet = int(input("How much do you want to bet?"))
+            if chips.bet <= player_chips.total:
                 waiting = False
 
             else:
@@ -18,7 +18,7 @@ def take_bet():
             continue
 
 
-    print(f"thank you, you bet {bet} chips!!")
+    print(f"thank you, you bet {chips.bet} chips!!")
 
 deck=Deck()
 hand = Hand()
@@ -28,7 +28,7 @@ def hit(deck, hand):
     Hand.add_cards(hand, card)
     if hand.value > 21 :
         if hand.aces > 0 :
-            hand.adjust_for_ace(hand)
+            hand.adjust_for_ace()
         else :
             print('bust')
 
@@ -48,3 +48,40 @@ def hit_or_stand(deck,hand):
         except:
             print("just type hit for another card or stand to stop")
             continue
+
+
+def show_some(player, dealer):
+    print("\nDealer's Hand:")
+    print(" <card hidden> ")
+    print('', dealer.cards[1])
+    print("\nPlayer's Hand:", *player.cards, sep='\n ')
+
+def show_all(player,dealer):
+    print("\nDealer's Hand:", *dealer.cards, sep='\n ')
+    print("Dealer's Hand =",dealer.value)
+    print("\nPlayer's Hand:", *player.cards, sep='\n ')
+    print("Player's Hand =",player.value)
+
+
+def player_busts(player, dealer, chips):
+    print("Player busts!")
+    chips.lose_bet()
+
+
+def player_wins(player, dealer, chips):
+    print("Player wins!")
+    chips.win_bet()
+
+
+def dealer_busts(player, dealer, chips):
+    print("Dealer busts!")
+    chips.win_bet()
+
+
+def dealer_wins(player, dealer, chips):
+    print("Dealer wins!")
+    chips.lose_bet()
+
+
+def push(player, dealer):
+    print("Dealer and Player tie! It's a push.")
